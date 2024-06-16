@@ -12,6 +12,12 @@ from GuessGame import generate_number
 
 from GuessGame import get_guess_from_user
 
+def getCurrencyRate():
+    url = "https://api.exchangerate-api.com/v4/latest/USD"
+    response = requests.get(url, verify=False)
+    print(f'response is {response}')
+    return response.json()['rates']['ILS']
+
 def get_money_interval(total_value_of_money,difficulty):
     t = total_value_of_money
     d = 6 - difficulty
@@ -30,7 +36,7 @@ def play_currency(difficulty):
     
     # function calling 
     #currentCurrencyExchangeRate = RealTimeCurrencyExchangeRate(from_currency, to_currency, api_key)
-    currentCurrencyExchangeRate = 3.5
+    currentCurrencyExchangeRate = getCurrencyRate()
     number_messge = "amount in USD :"
     generate_number_amount_in_USD = generate_number(number_messge, 101)
     amount_in_ILS = currentCurrencyExchangeRate * generate_number_amount_in_USD
